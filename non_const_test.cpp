@@ -28,5 +28,8 @@ int main()
   
     assert(i == 9);
   
+  	// vec1 must not be moved!
+  	assert(vec1.size() == 9);
+  
     return 0;
 }
