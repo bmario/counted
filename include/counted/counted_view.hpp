@@ -8,37 +8,9 @@
 #ifndef INCLUDE_COUNTED_COUNTED_VIEW_HPP
 #define INCLUDE_COUNTED_COUNTED_VIEW_HPP
     
+#include <counted/counted_iterator.hpp>
+	
 namespace detail {
-    template <typename Value>
-    class proxy {
-    public:
-        proxy(std::size_t count, const Value& v) : m_count(count), v(v) {}
-        
-        std::size_t count() const
-        {
-            return m_count;
-        }
-        
-        std::size_t first() const
-        {
-            return count();
-        }
-        
-        const Value& value() const
-        {
-            return v;
-        }
-        
-        const Value& second() const
-        {
-            return value();
-        }
-        
-    private:
-        std::size_t m_count;
-        const Value& v;
-    };
-
     template <typename Range>
     class counted_view {
         const Range& r;
@@ -49,59 +21,15 @@ namespace detail {
 
         counted_view(const Range& r) : r(r) {}
 
-        class iterator
-        {
-        public:
-            iterator(nested_iterator iter) : iter(iter), counter(0) {}
-            iterator(nested_iterator iter, std::size_t counter) : iter(iter), counter(counter) {}
-
-            proxy<nested_value_type> operator*()
-            {
-                return proxy<nested_value_type>(counter, *iter);
-            }
-
-            //pre increment, e.g. ++iter
-            iterator& operator++()
-            {
-                ++iter;
-                ++counter;
-
-                return *this;
-            }
-    
-            //post increment, e.g. iter++
-            iterator operator++(int)
-            {
-                iterator tmp(iter, counter);
-                ++iter;
-                ++counter;
-
-                return tmp;
-            }
-
-            bool operator!=(iterator& other)
-            {
-                return iter != other.iter;
-            }
-  
-            bool operator==(iterator& other)
-            {
-                return iter == other.iter;
-            }
-        private:
-            nested_iterator iter;
-            std::size_t counter;
-        };
-
-        iterator begin()
+        counted_iterator<nested_iterator> begin()
         {
   
-            return iterator(std::begin(r));
+            return counted_iterator<nested_iterator>(std::begin(r));
         }
 
-        iterator end()
+        counted_iterator<nested_iterator> end()
         {
-            return iterator(std::end(r));
+            return counted_iterator<nested_iterator>(std::end(r));
         }
     };
 }
