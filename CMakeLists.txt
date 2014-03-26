@@ -1,10 +1,10 @@
 project(counted)
 
-include(ctest)
+include(CTest)
 
 cmake_minimum_required(VERSION 2.8)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -stdlib=libc++")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 
 include_directories(include)
 
@@ -14,6 +14,9 @@ add_executable(array_test array_test.cpp)
 add_executable(temporary_test temporary_test.cpp)
 add_executable(temporary_test2 temporary_test2.cpp)
 
+
+# set additional flags for debug build
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -Wall -pedantic")
 
 add_test(const_test const_test)
 add_test(non_const_test non_const_test)

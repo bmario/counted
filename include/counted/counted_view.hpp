@@ -13,13 +13,13 @@
 namespace detail {
     template <typename Range>
     class counted_view {
-        const Range& r;
+        Range& r;
 
         typedef decltype(std::begin(r))  nested_iterator;
         typedef decltype(*std::begin(r)) nested_value_type;
     public:
 
-        counted_view(const Range& r) : r(r) {}
+        counted_view(Range& r) : r(r) {}
 
         counted_iterator<nested_iterator> begin()
         {
