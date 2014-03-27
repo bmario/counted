@@ -12,21 +12,26 @@ namespace detail {
 template <typename Value>
 class proxy {
 public:
-    proxy(std::size_t count, const Value& v) : m_count(count), v(v) {}
-
+    proxy(std::size_t count, Value v) : m_count(count), v(v) {}
+    
     std::size_t count() const
     {
         return m_count;
     }
-
-    const Value& value() const
+    
+    std::size_t index() const
+    {
+        return m_count;
+    }
+    
+    Value value() const
     {
         return v;
     }
-
+    
 private:
     std::size_t m_count;
-    const Value& v;
+    Value v;
 };
 
 template<typename Iterator>
