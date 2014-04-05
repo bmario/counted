@@ -1,5 +1,5 @@
 /*
- * (c) 2013 Mario Bielert <mario.bielert@googlemail.com>
+ * (c) 2013, 2014 Mario Bielert <mario.bielert@googlemail.com>
  *
  * This work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License. 
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/.
@@ -11,25 +11,23 @@
 #include <counted/counted_iterator.hpp>
 	
 namespace detail {
-    template <typename Range>
+    template <typename Iterator>
     class counted_view {
-        Range& r;
-
-        typedef decltype(std::begin(r))  nested_iterator;
-        typedef decltype(*std::begin(r)) nested_value_type;
+        Iterator begin_;
+        Iterator end_;
     public:
 
-        counted_view(Range& r) : r(r) {}
+        counted_view(Iterator begin, Iterator end) : begin_(begin), end_(end) {}
 
-        counted_iterator<nested_iterator> begin()
+        counted_iterator<Iterator> begin()
         {
   
-            return counted_iterator<nested_iterator>(std::begin(r));
+            return counted_iterator<Iterator>(begin_);
         }
 
-        counted_iterator<nested_iterator> end()
+        counted_iterator<Iterator> end()
         {
-            return counted_iterator<nested_iterator>(std::end(r));
+            return counted_iterator<Iterator>(end_);
         }
     };
 }
