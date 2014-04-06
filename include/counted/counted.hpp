@@ -39,4 +39,10 @@ detail::counted_temporary<std::vector<T>> counted(std::initializer_list<T>&& l)
     return detail::counted_temporary<std::vector<T>>(std::vector<T>(std::move(l)));
 }
 
+template <typename Iterator>
+detail::counted_view<Iterator> counted(Iterator begin, Iterator end)
+{
+    return detail::counted_view<Iterator>(begin, end);
+}
+
 #endif //INCLUDE_COUNTED_COUNTED_HPP
